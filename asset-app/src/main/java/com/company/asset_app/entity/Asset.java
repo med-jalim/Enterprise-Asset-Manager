@@ -1,12 +1,6 @@
 package com.company.asset_app.entity;
-
-
-import jakarta.persistence.Entity;
-
 import java.time.LocalDateTime;
-
 import jakarta.persistence.*;
-import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,7 +28,7 @@ public class Asset {
     @Column(nullable = false)
     private String status;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", insertable = false, updatable = false)
     private LocalDateTime createdAt;
 
 }
