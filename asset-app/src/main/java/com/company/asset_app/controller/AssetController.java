@@ -1,37 +1,32 @@
 package com.company.asset_app.controller;
 
-import java.util.List;
 import java.util.Objects;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.company.asset_app.entity.Asset;
 import com.company.asset_app.service.AssetService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @RestController
-@RequestMapping("/assets")
+@RequestMapping(path = "/{version}/assets",version = "v1")
 public class AssetController {
     protected final AssetService assetService;
 
-    public AssetController(AssetService assetService) {
-        this.assetService = assetService;
-    }
-
     @GetMapping
-    public ResponseEntity<List<Asset>> getAllAssets() {
-        List<Asset> assets = assetService.getAllAssets();
-        return ResponseEntity.ok(assets);
+    public ResponseEntity<Page<Asset>> getAllAssets(@PageableDefault Pageable pageable) { 
+        return ResponseEntity.ok(assetService.getAllAssets(pageable));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Asset> getAssetById(@PathVariable Long id) {
-        Asset asset = assetService.getAssetById(id);
-        if (Objects.nonNull(asset)) {
-            return ResponseEntity.ok(asset);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(assetService.getAssetById(id));
     }
 
     @PostMapping
