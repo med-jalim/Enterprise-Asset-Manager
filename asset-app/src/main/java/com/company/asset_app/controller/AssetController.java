@@ -1,8 +1,10 @@
 package com.company.asset_app.controller;
 
-import java.util.List;
 import java.util.Objects;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,9 +21,8 @@ public class AssetController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Asset>> getAllAssets() {
-        List<Asset> assets = assetService.getAllAssets();
-        return ResponseEntity.ok(assets);
+    public ResponseEntity<Page<Asset>> getAllAssets(@PageableDefault Pageable pageable) { 
+        return ResponseEntity.ok(assetService.getAllAssets(pageable));
     }
 
     @GetMapping("/{id}")
