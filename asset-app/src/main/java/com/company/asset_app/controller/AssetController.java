@@ -11,14 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import com.company.asset_app.entity.Asset;
 import com.company.asset_app.service.AssetService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(path = "/{version}/assets",version = "v1")
 public class AssetController {
     protected final AssetService assetService;
-
-    public AssetController(AssetService assetService) {
-        this.assetService = assetService;
-    }
 
     @GetMapping
     public ResponseEntity<Page<Asset>> getAllAssets(@PageableDefault Pageable pageable) { 
