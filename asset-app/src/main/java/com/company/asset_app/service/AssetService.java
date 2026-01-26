@@ -6,6 +6,7 @@ import java.util.Objects;
 import org.springframework.stereotype.Service;
 
 import com.company.asset_app.entity.Asset;
+import com.company.asset_app.exception.ResourceNotFoundException;
 import com.company.asset_app.repository.AssetRepository;
 
 @Service
@@ -21,7 +22,8 @@ public class AssetService {
     }
 
     public Asset getAssetById(Long id) {
-        return assetRepository.findById(id).orElse(null);
+        return assetRepository.findById(id)
+        .orElseThrow(()-> new ResourceNotFoundException("Asset not found " + id));
     }
 
     public Asset createAsset(Asset asset) {

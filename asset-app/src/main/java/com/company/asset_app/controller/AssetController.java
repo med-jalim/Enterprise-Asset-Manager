@@ -26,12 +26,7 @@ public class AssetController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Asset> getAssetById(@PathVariable Long id) {
-        Asset asset = assetService.getAssetById(id);
-        if (Objects.nonNull(asset)) {
-            return ResponseEntity.ok(asset);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(assetService.getAssetById(id));
     }
 
     @PostMapping
