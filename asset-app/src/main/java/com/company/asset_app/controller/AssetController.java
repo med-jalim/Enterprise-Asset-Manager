@@ -10,7 +10,7 @@ import com.company.asset_app.entity.Asset;
 import com.company.asset_app.service.AssetService;
 
 @RestController
-@RequestMapping("/assets")
+@RequestMapping(path = "/{version}/assets",version = "v1")
 public class AssetController {
     protected final AssetService assetService;
 
