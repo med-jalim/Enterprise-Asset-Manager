@@ -1,6 +1,5 @@
 package com.company.asset_app.service;
 
-import java.util.Objects;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,8 +26,9 @@ public class AssetService {
         .map(a->assetMapper.toDto(a));
     }
 
-    public Asset getAssetById(Long id) {
+    public AssetResponseDto getAssetById(Long id) {
         return assetRepository.findById(id)
+        .map(a->assetMapper.toDto(a))
         .orElseThrow(()-> new ResourceNotFoundException("Asset not found " + id));
     }
 
@@ -36,16 +36,13 @@ public class AssetService {
         return assetMapper.toDto(assetRepository.save(assetMapper.toEntity(dto)));
     }
 
-    public Asset updateAsset(Long id, Asset assetDetails) {
-        Asset asset = assetRepository.findById(id).orElse(null);
-        if (Objects.nonNull(asset)) {
-            asset.setName(assetDetails.getName());
-            asset.setCategory(assetDetails.getCategory());
-            asset.setSerialNumber(assetDetails.getSerialNumber());
-            asset.setStatus(assetDetails.getStatus());
-            return assetRepository.save(asset);
-        }
-        return null;
+    public AssetResponseDto updateAsset(Long id, AssetCreateRequestDto assetDetails) {
+        Asset asset = assetRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Asset not found " + id));
+        asset.setName(assetDetails.getName());
+        asset.setCategory(assetDetails.getCategory());
+        asset.setSerialNumber(assetDetails.getSerialNumber());
+        asset.setStatus(assetDetails.getStatus());
+        return assetMapper.toDto(assetRepository.save(asset));
     }
 
     public void deleteAsset(Long id) {

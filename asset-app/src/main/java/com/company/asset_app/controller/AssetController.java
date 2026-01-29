@@ -1,6 +1,5 @@
 package com.company.asset_app.controller;
 
-import java.util.Objects;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.company.asset_app.dto.AssetCreateRequestDto;
 import com.company.asset_app.dto.AssetResponseDto;
-import com.company.asset_app.entity.Asset;
 import com.company.asset_app.service.AssetService;
 
 import lombok.RequiredArgsConstructor;
@@ -27,7 +25,7 @@ public class AssetController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Asset> getAssetById(@PathVariable Long id) {
+    public ResponseEntity<AssetResponseDto> getAssetById(@PathVariable Long id) {
         return ResponseEntity.ok(assetService.getAssetById(id));
     }
 
@@ -38,13 +36,8 @@ public class AssetController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Asset> updateAsset(@PathVariable Long id, @RequestBody Asset assetDetails) {
-        Asset updatedAsset = assetService.updateAsset(id, assetDetails);
-        if (Objects.nonNull(updatedAsset)) {
-            return ResponseEntity.ok(updatedAsset);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<AssetResponseDto> updateAsset(@PathVariable Long id, @RequestBody AssetCreateRequestDto assetDetails) {
+        return ResponseEntity.ok(assetService.updateAsset(id, assetDetails));
     }
     
 
