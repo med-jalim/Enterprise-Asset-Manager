@@ -8,6 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.company.asset_app.dto.AssetResponseDto;
 import com.company.asset_app.entity.Asset;
 import com.company.asset_app.service.AssetService;
 
@@ -20,7 +21,7 @@ public class AssetController {
     protected final AssetService assetService;
 
     @GetMapping
-    public ResponseEntity<Page<Asset>> getAllAssets(@PageableDefault Pageable pageable) { 
+    public ResponseEntity<Page<AssetResponseDto>> getAllAssets(@PageableDefault Pageable pageable) { 
         return ResponseEntity.ok(assetService.getAllAssets(pageable));
     }
 
