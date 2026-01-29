@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.company.asset_app.dto.AssetCreateRequestDto;
 import com.company.asset_app.dto.AssetResponseDto;
 import com.company.asset_app.entity.Asset;
 import com.company.asset_app.exception.ResourceNotFoundException;
@@ -31,8 +32,8 @@ public class AssetService {
         .orElseThrow(()-> new ResourceNotFoundException("Asset not found " + id));
     }
 
-    public Asset createAsset(Asset asset) {
-        return assetRepository.save(asset);
+    public AssetResponseDto createAsset(AssetCreateRequestDto dto) {
+        return assetMapper.toDto(assetRepository.save(assetMapper.toEntity(dto)));
     }
 
     public Asset updateAsset(Long id, Asset assetDetails) {
