@@ -6,20 +6,24 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.company.asset_app.dto.AssetResponseDto;
 import com.company.asset_app.entity.Asset;
 import com.company.asset_app.exception.ResourceNotFoundException;
+import com.company.asset_app.mapper.AssetMapper;
 import com.company.asset_app.repository.AssetRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class AssetService {
     private final AssetRepository assetRepository;
+    private final AssetMapper assetMapper;
 
-    public AssetService(AssetRepository assetRepository) {
-        this.assetRepository = assetRepository;
-    }
 
-    public Page<Asset> getAllAssets(Pageable pageable) {
-        return assetRepository.findAll(pageable);
+    public Page<AssetResponseDto> getAllAssets(Pageable pageable) {
+        return assetRepository.findAll(pageable)
+        .map(a->assetMapper.toDto(a));
     }
 
     public Asset getAssetById(Long id) {
