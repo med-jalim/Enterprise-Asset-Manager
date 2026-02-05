@@ -2,13 +2,10 @@ import {
   MoreHorizontal,
   Plus,
   Search,
-  Filter,
   FileText,
   Image as ImageIcon,
   Video,
   Box,
-  ArrowUpRight,
-  ArrowDownRight,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -37,8 +34,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useState } from "react";
+import { assetService } from "@/services/assetService";
+import { useState, useEffect } from "react";
 
 // --- Types ---
 type AssetStatus = "Active" | "Under Review" | "Archived";
@@ -87,6 +84,19 @@ const TypeIcon = ({ type }: { type: AssetType }) => {
 export default function AssetsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [assets, setAssets] = useState<Asset[]>([]);
+
+  useEffect(() => {
+    const fetchAssets = async () => {
+      try {
+        const assets = await assetService.getAssets();
+        console.log(assets);
+      } catch (error) {
+        console.error("Failed to fetch assets:", error);
+      }
+    };
+
+    fetchAssets();
+  }, []);
 
   const filteredAssets = assets.filter((asset) =>
     asset.name.toLowerCase().includes(searchTerm.toLowerCase()),
