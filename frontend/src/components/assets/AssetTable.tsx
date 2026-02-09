@@ -82,7 +82,7 @@ export default function AssetTable({
                 </div>
               </TableCell>
               <TableCell>{asset.serialNumber}</TableCell>
-              <TableCell>{asset.type}</TableCell>
+              <TableCell>{asset.category}</TableCell>
               <TableCell>
                 <StatusBadge status={asset.status} />
               </TableCell>
