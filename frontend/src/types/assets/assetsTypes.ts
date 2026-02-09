@@ -6,9 +6,16 @@ interface Asset {
   id: string;
   name: string;
   serialNumber: string;
-  type: string;
+  category: string;
   status: AssetStatus;
 }
 
+type AssetFormValues = {
+  name: string;
+  serialNumber: string;
+  category: string;
+  status: AssetStatus;
+};
 
-export type { Asset, AssetStatus };
+
+export type { Asset, AssetStatus,AssetFormValues };

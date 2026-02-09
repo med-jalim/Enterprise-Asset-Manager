@@ -1,5 +1,5 @@
 import api from './../api';
-import type { Asset } from "@/types/assets/assetsTypes";
+import type { AssetFormValues } from "@/types/assets/assetsTypes";
 
 export const assetService = {
     getAssets: async () => {
@@ -12,7 +12,7 @@ export const assetService = {
         }
     },
 
-    createAsset: async (assetData: Asset) => {
+    createAsset: async (assetData: AssetFormValues) => {
         try {
             const response = await api.post('/assets', assetData);  
             return response.data;
