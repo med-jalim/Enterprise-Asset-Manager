@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: employee-app
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+
+server:
+  servlet:
+    context-path: /api
+  port: 8082
+
+
