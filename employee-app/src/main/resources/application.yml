@@ -12,6 +12,12 @@ spring:
       ddl-auto: update
     show-sql: true
 
+  mvc:
+    apiversion:
+      use:
+        path-segment:  0
+      required: true
+
 
 server:
   servlet:
