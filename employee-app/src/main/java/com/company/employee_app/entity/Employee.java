@@ -1,6 +1,8 @@
 
 package com.company.employee_app.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,5 +21,8 @@ public class Employee {
     protected String name ;
 
     @Column(name = "email", nullable = false, unique = true)
-    protected String email ;
+    protected String email;
+    
+    @Column(name = "created_at", insertable = false, updatable = false)
+    protected LocalDateTime createdAt ;
 }
