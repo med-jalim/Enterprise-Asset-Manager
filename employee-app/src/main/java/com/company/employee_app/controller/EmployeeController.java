@@ -12,7 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -21,24 +21,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class EmployeeController {
     private final EmployeeService employeeService;
 
+    @GetMapping
     public ResponseEntity<Page<EmployeeResponseDto>> getAllEmployees(@PageableDefault Pageable pageable) {
         return ResponseEntity.ok(employeeService.getAllEmployees(pageable));
     }
     
-    public ResponseEntity<EmployeeResponseDto> getEmployeeById(Long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<EmployeeResponseDto> getEmployeeById(@PathVariable Long id) {
         return ResponseEntity.ok(employeeService.getEmployeeById(id));
     }
 
-    public ResponseEntity<EmployeeResponseDto> createEmployee(EmployeeCreateRequestDto employeeCreateRequestDto) {
+    @PostMapping
+    public ResponseEntity<EmployeeResponseDto> createEmployee(@RequestBody EmployeeCreateRequestDto employeeCreateRequestDto) {
         return ResponseEntity.ok(employeeService.createEmployee(employeeCreateRequestDto));
     }
 
-    public ResponseEntity<EmployeeResponseDto> updateEmployee(Long id,
-            EmployeeCreateRequestDto employeeCreateRequestDto) {
+    @PutMapping("/{id}")
+    public ResponseEntity<EmployeeResponseDto> updateEmployee(@PathVariable Long id,
+            @RequestBody EmployeeCreateRequestDto employeeCreateRequestDto) {
         return ResponseEntity.ok(employeeService.updateEmployee(id, employeeCreateRequestDto));
     }
     
-    public ResponseEntity<Void> deleteEmployee(Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
         employeeService.deleteEmployee(id);
         return ResponseEntity.noContent().build();
     }

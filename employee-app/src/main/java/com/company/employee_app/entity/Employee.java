@@ -23,6 +23,6 @@ public class Employee {
     @Column(name = "email", nullable = false, unique = true)
     protected String email;
     
-    @Column(name = "created_at", insertable = false, updatable = false)
+    @Column(name = "created_at", insertable = false, updatable = false, nullable = false)
     protected LocalDateTime createdAt ;
 }
