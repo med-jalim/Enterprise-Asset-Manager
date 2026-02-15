@@ -5,8 +5,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.company.asset_app.client.EmployeeClient;
 import com.company.asset_app.dto.AssetCreateRequestDto;
 import com.company.asset_app.dto.AssetResponseDto;
+import com.company.asset_app.dto.EmployeeResponseDto;
 import com.company.asset_app.entity.Asset;
 import com.company.asset_app.exception.ResourceNotFoundException;
 import com.company.asset_app.mapper.AssetMapper;
@@ -19,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class AssetService {
     private final AssetRepository assetRepository;
     private final AssetMapper assetMapper;
+    private final EmployeeClient employeeClient;
 
 
     public Page<AssetResponseDto> getAllAssets(Pageable pageable) {
@@ -47,6 +50,10 @@ public class AssetService {
 
     public void deleteAsset(Long id) {
         assetRepository.deleteById(id);
+    }
+
+    public EmployeeResponseDto getEmployeeById(Long id) {
+        return employeeClient.getEmployeeById(id).getBody();
     }
 
     
