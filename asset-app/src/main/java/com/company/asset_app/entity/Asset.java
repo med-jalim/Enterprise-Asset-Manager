@@ -28,6 +28,9 @@ public class Asset {
     @Column(nullable = false)
     private String status;
 
+    @Column(name = "employee_id" ,nullable = false)
+    private Long employeeId;
+
     @Column(name = "created_at", insertable = false, updatable = false)
     private LocalDateTime createdAt;
 

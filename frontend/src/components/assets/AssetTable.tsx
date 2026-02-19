@@ -49,6 +49,7 @@ export default function AssetTable({
           <TableHead>Serial Number</TableHead>
           <TableHead>Type</TableHead>
           <TableHead>Status</TableHead>
+          <TableHead className="text-right">Assigned To</TableHead>
           <TableHead className="text-right">Actions</TableHead>
         </TableRow>
       </TableHeader>
@@ -85,6 +86,13 @@ export default function AssetTable({
               <TableCell>{asset.category}</TableCell>
               <TableCell>
                 <StatusBadge status={asset.status} />
+              </TableCell>
+              <TableCell className="text-right">
+                {asset.employee ? (
+                  <span className="text-sm">{asset.employee.name}</span>
+                ) : (
+                  <span className="text-sm text-gray-500">Unassigned</span>
+                )}
               </TableCell>
               <TableCell className="text-right">
                 <DropdownMenu>

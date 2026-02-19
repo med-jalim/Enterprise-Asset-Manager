@@ -2,12 +2,18 @@
 
 type AssetStatus = "Active" | "Under Review" | "Archived";
 
+type employee={
+  id: number;
+  name: string;
+}
+
 interface Asset {
-  id: string;
+  id: number;
   name: string;
   serialNumber: string;
   category: string;
   status: AssetStatus;
+  employee?: employee;
 }
 
 type AssetFormValues = {
@@ -15,7 +21,8 @@ type AssetFormValues = {
   serialNumber: string;
   category: string;
   status: AssetStatus;
+  employeeId: string;
 };
 
 
-export type { Asset, AssetStatus,AssetFormValues };
+export type { Asset, AssetStatus,AssetFormValues, employee };

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.company.asset_app.dto.AssetCreateRequestDto;
 import com.company.asset_app.dto.AssetResponseDto;
-import com.company.asset_app.dto.EmployeeResponseDto;
 import com.company.asset_app.service.AssetService;
 
 import lombok.RequiredArgsConstructor;
@@ -50,10 +49,7 @@ public class AssetController {
     }
 
 
-    @GetMapping("/test-employee/{id}")
-    public ResponseEntity<EmployeeResponseDto> getEmployeeById(@PathVariable Long id) {
-        return ResponseEntity.ok(assetService.getEmployeeById(id));
-    }
+  
     
 
 
