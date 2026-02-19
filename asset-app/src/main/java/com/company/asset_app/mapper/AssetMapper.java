@@ -10,6 +10,7 @@ import com.company.asset_app.entity.Asset;
 @Mapper(componentModel = "spring")
 public interface AssetMapper {
 
+    @Mapping(target = "employee", ignore = true)
     AssetResponseDto toDto(Asset asset);
 
     @Mapping(target = "id", ignore = true)

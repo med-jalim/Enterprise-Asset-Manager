@@ -11,4 +11,5 @@ public class AssetCreateRequestDto {
     private String category;
     private String serialNumber;
     private String status;
+    private Long employeeId;
 }

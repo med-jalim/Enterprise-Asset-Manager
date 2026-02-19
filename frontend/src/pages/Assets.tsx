@@ -54,6 +54,7 @@ export default function AssetsPage() {
       setError("Failed to add asset");
       setIsFormOpen(false);
     } finally {
+      setIsFormOpen(false);
       setIsSubmitting(false);
     }
   };

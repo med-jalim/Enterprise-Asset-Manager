@@ -26,17 +26,19 @@ public class AssetService {
 
     public Page<AssetResponseDto> getAllAssets(Pageable pageable) {
         return assetRepository.findAll(pageable)
-        .map(a->assetMapper.toDto(a));
+                .map(a -> getAssetWithEmployee(a));
     }
 
     public AssetResponseDto getAssetById(Long id) {
         return assetRepository.findById(id)
-        .map(a->assetMapper.toDto(a))
-        .orElseThrow(()-> new ResourceNotFoundException("Asset not found " + id));
+                .map(a -> getAssetWithEmployee(a))
+                .orElseThrow(()-> new ResourceNotFoundException("Asset not found " + id));
     }
 
     public AssetResponseDto createAsset(AssetCreateRequestDto dto) {
-        return assetMapper.toDto(assetRepository.save(assetMapper.toEntity(dto)));
+        Asset savedAsset = assetRepository.save(assetMapper.toEntity(dto));
+        return getAssetWithEmployee(savedAsset);
+        
     }
 
     public AssetResponseDto updateAsset(Long id, AssetCreateRequestDto assetDetails) {
@@ -52,8 +54,11 @@ public class AssetService {
         assetRepository.deleteById(id);
     }
 
-    public EmployeeResponseDto getEmployeeById(Long id) {
-        return employeeClient.getEmployeeById(id).getBody();
+    public AssetResponseDto getAssetWithEmployee(Asset asset) {
+        EmployeeResponseDto employee = employeeClient.getEmployeeById(asset.getEmployeeId()).getBody();
+        AssetResponseDto dto = assetMapper.toDto(asset);
+        dto.setEmployee(employee);
+        return dto;
     }
 
     

@@ -1,13 +1,26 @@
 import axios from 'axios';
 
 
-const API_BASE_URL = 'http://localhost:8080/api/v1'; 
+const API_BASE_URL = import.meta.env.VITE_ASSETS_APP_API; 
 
-const api = axios.create({
+const AssetsApi = axios.create({
     baseURL: API_BASE_URL,
     headers: {
         'Content-Type': 'application/json',
     },
     
 })
-export default api;
+
+
+const EMPLOYEES_API_BASE_URL = import.meta.env.VITE_EMPLOYEES_APP_API;
+const EmployeesApi = axios.create({
+    baseURL: EMPLOYEES_API_BASE_URL,
+    headers: {
+        'Content-Type': 'application/json',
+    },
+
+})
+
+
+  ;
+export {AssetsApi, EmployeesApi };
