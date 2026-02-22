@@ -19,11 +19,12 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+            .cors(cors->{})
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET, "/api/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.POST,"/api/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE,"/api/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/**").hasRole("ADMIN")
 
             )
             .oauth2ResourceServer(oauth -> oauth
