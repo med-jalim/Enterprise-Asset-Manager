@@ -15,6 +15,7 @@ import { assetService } from "@/services/assets/assetService";
 import AssetTable from "@/components/assets/AssetTable";
 import AssetForm from "@/components/assets/AssetForm";
 import { useState, useEffect } from "react";
+import { hasRole } from "@/context/auth";
 
 // --- Main Page Component ---
 
@@ -25,6 +26,7 @@ export default function AssetsPage() {
   const [error, setError] = useState<string | null>(null);
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const isAdmin = hasRole("ADMIN");
 
   const fetchAssets = async () => {
     try {
@@ -59,6 +61,17 @@ export default function AssetsPage() {
     }
   };
 
+  const handleDeleteAsset = async (assetId: number) => {
+    try {
+      await assetService.deleteAsset(assetId);
+      setAssets((prev) => prev.filter((asset) => asset.id !== assetId));
+    } catch (error) {
+      fetchAssets();
+      console.error("Failed to delete asset:", error);
+      setError("Failed to delete asset");
+    }
+  };
+
   const filteredAssets = assets.filter((asset) =>
     asset.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
@@ -75,9 +88,11 @@ export default function AssetsPage() {
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <Button onClick={() => setIsFormOpen(true)}>
-              <Plus className="mr-2 h-4 w-4" /> Add New Asset
-            </Button>
+            {isAdmin && (
+              <Button onClick={() => setIsFormOpen(true)}>
+                <Plus className="mr-2 h-4 w-4" /> Add New Asset
+              </Button>
+            )}
           </div>
         </div>
 
@@ -105,7 +120,12 @@ export default function AssetsPage() {
             {error ? (
               <p className="text-red-500">Error: {error}</p>
             ) : (
-              <AssetTable assets={filteredAssets} isLoading={loading} />
+              <AssetTable
+                assets={filteredAssets}
+                isLoading={loading}
+                onDelete={handleDeleteAsset}
+                isAdmin={isAdmin}
+              />
             )}
           </CardContent>
         </Card>
