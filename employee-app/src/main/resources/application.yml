@@ -21,8 +21,11 @@ spring:
       use:
         path-segment:  0
       required: true
-
-
+    security:
+        oauth2:
+            resourceserver:
+                jwt:
+                    issuer-uri: ${OAUTH2_ISSUER_URI}
 server:
   servlet:
     context-path: /api

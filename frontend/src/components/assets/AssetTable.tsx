@@ -37,9 +37,13 @@ const StatusBadge = ({ status }: { status: AssetStatus }) => {
 export default function AssetTable({
   assets,
   isLoading,
+  onDelete,
+  isAdmin,
 }: {
   assets: Asset[];
   isLoading?: boolean;
+  onDelete: (assetId: number) => void;
+  isAdmin: boolean;
 }) {
   return (
     <Table>
@@ -105,16 +109,21 @@ export default function AssetTable({
                   <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
                     <DropdownMenuItem
-                      onClick={() => navigator.clipboard.writeText(asset.id)}
+                      onClick={() =>
+                        navigator.clipboard.writeText(asset.id.toString())
+                      }
                     >
                       Copy Asset ID
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>View Details</DropdownMenuItem>
-                    <DropdownMenuItem>Download</DropdownMenuItem>
-                    <DropdownMenuItem className="text-red-600">
-                      Delete
-                    </DropdownMenuItem>
+                    {isAdmin && (
+                      <DropdownMenuItem
+                        onClick={() => onDelete(asset.id)}
+                        className="text-red-600"
+                      >
+                        Delete
+                      </DropdownMenuItem>
+                    )}
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>

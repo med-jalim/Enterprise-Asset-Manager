@@ -33,7 +33,7 @@ spring:
         oauth2:
             resourceserver:
                 jwt:
-                    issuer-uri: ${Keycloak_Asset_Management}
+                    issuer-uri: ${OAUTH2_ISSUER_URI}
 
 server:
   servlet:

@@ -1,4 +1,4 @@
-import { Building2, LaptopMinimal, User2 } from "lucide-react";
+import { Building2, LaptopMinimal, MoreVertical, User2 } from "lucide-react";
 import { Link } from "react-router";
 import {
   Sidebar,
@@ -11,6 +11,14 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
+import { getUserName, logout } from "@/context/auth";
+import {
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { DropdownMenu } from "../ui/dropdown-menu";
+import { Button } from "../ui/button";
 
 type MenuItem = {
   label: string;
@@ -61,7 +69,27 @@ export function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton>
-              <User2 /> Username
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="flex align-middle justify-between gap-2 h-8 w-full px-4"
+                  >
+                    <span className="flex gap-2">
+                      <User2 className="h-4 w-4" />
+                      {getUserName() || "username"}
+                    </span>
+                    <MoreVertical className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem
+                    onClick={() => logout(window.location.origin)}
+                  >
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
